@@ -1,0 +1,60 @@
+<!-- Page 8: Research library -->
+{% extends "base.html" %}
+
+{% block title %}Research Library — Beyond the Burning{% endblock %}
+
+{% block content %}
+<section class="page-head">
+    <p class="eyebrow">Page 8</p>
+    <h1>Research Library</h1>
+    <p class="lead">The studies and guidance this website is built on. Each card lists what the
+       researchers found and the limits of what the study can show.</p>
+</section>
+
+<section class="card">
+    <h2>How to read the evidence</h2>
+    <ul class="legend">
+        <li><span class="badge established">Established effect</span> Consistent clinical evidence, such as eye irritation, coughing, and skin inflammation.</li>
+        <li><span class="badge association">Observed association</span> A link found in studies, such as menstrual changes after exposure. A link does not prove cause.</li>
+        <li><span class="badge unknown">Insufficient evidence</span> Questions research can't answer yet, such as effects on fertility or pregnancy loss.</li>
+    </ul>
+</section>
+
+{% for sid, s in sources.items() %}
+<article class="card study" id="{{ sid }}">
+    <p class="eyebrow">{{ s.year }} &middot; {{ s.journal }}</p>
+    <h2>{{ s.title }}</h2>
+    <p class="small">{{ s.authors }}</p>
+    <dl>
+        <dt>Study type</dt><dd>{{ s.type }}</dd>
+        <dt>Population</dt><dd>{{ s.sample }}</dd>
+        <dt>Main findings</dt><dd>{{ s.findings }}</dd>
+        <dt>Limitations</dt><dd>{{ s.limitations }}</dd>
+    </dl>
+    <a href="{{ s.url }}" target="_blank" rel="noopener">Read the original &rarr;</a>
+</article>
+{% endfor %}
+
+<section class="card">
+    <h2>Research gaps</h2>
+    <p>More research is needed on:</p>
+    <ul>
+        <li>Long-term lung health</li>
+        <li>Repeated exposure among civilians</li>
+        <li>Menstrual and hormone effects</li>
+        <li>Pregnancy and fertility outcomes</li>
+        <li>Children's exposure</li>
+        <li>Exposure among nearby residents</li>
+        <li>Differences between chemical agents</li>
+    </ul>
+    <p>Current research shows these chemicals can do more than cause temporary discomfort, but how
+       strong the evidence is depends a lot on which health effect you look at.</p>
+</section>
+
+<section class="survey-banner">
+    <h2>Help add to the research</h2>
+    <p>If you were affected in Minneapolis between December 2025 and March 2026, the community health
+       survey is collecting firsthand accounts.</p>
+    <a class="button button-warn" href="{{ url_for('minneapolis') }}">Minneapolis exposure survey</a>
+</section>
+{% endblock %}

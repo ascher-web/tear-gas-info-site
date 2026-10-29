@@ -1,0 +1,10 @@
+<!-- shown when someone visits a page that doesn't exist -->
+{% extends "base.html" %}
+
+{% block title %}Page Not Found — Beyond the Burning{% endblock %}
+
+{% block content %}
+<h1 class="error">Page Not Found</h1>
+<p>We don't have a page at that address.</p>
+<a href="{{ url_for('index') }}">Back to the homepage</a>
+{% endblock %}

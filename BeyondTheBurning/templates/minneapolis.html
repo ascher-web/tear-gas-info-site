@@ -1,0 +1,53 @@
+<!-- Minneapolis community health survey page -->
+{% extends "base.html" %}
+
+{% block title %}Minneapolis Exposure Survey — Beyond the Burning{% endblock %}
+
+{% block content %}
+<section class="page-head">
+    <p class="eyebrow">Community Research</p>
+    <h1>Minneapolis 2025–2026: Documenting the Health Impacts</h1>
+    <p class="lead">Were you in Minneapolis during ICE and other federal enforcement operations between
+       late December 2025 and March 2026? Your experience matters.</p>
+</section>
+
+<section class="survey-banner">
+    <h2>Take the community health survey</h2>
+    <p>The survey is hosted on the University of Minnesota's REDCap research system.</p>
+    <a class="button button-warn" href="{{ survey_url }}" target="_blank" rel="noopener">Open the survey &rarr;</a>
+</section>
+
+<section class="card">
+    <h2>Who should take the survey?</h2>
+    <p>If you lived in, worked in, or visited Minneapolis during this time, you may be able to take part if you:</p>
+    <ul>
+        <li>Were exposed to tear gas, pepper spray, pepper balls, or other less-lethal weapons</li>
+        <li>Had breathing trouble, eye irritation, skin injuries, menstrual changes, or other symptoms after exposure</li>
+        <li>Were injured during an encounter involving federal agents</li>
+        <li>Saw someone else get hurt or exposed to chemical irritants</li>
+        <li>Felt stressed, anxious, or upset after seeing force being used</li>
+        <li>Were a nearby resident, worker, pedestrian, or bystander</li>
+    </ul>
+    <p><strong>You don't have to have been directly exposed or injured.</strong> Experiences from witnesses
+       and community members are important too.</p>
+</section>
+
+<section class="card">
+    <h2>Why we're collecting this information</h2>
+    <p>As the rest of this site shows, the long-term health effects of chemical irritants and other
+       less-lethal weapons are not well studied, especially in everyday civilians. Collecting firsthand
+       accounts can help researchers spot patterns in symptoms, understand what the community went
+       through, and show where more medical research is needed.</p>
+    <p>See <a href="{{ url_for('topic', slug='reproductive') }}">Reproductive Health</a>,
+       <a href="{{ url_for('topic', slug='respiratory') }}">Respiratory Health</a>, and
+       <a href="{{ url_for('topic', slug='long-term') }}">Long-Term Effects</a> for what is already known.</p>
+</section>
+
+<section class="card callout">
+    <h2>Before you start</h2>
+    <p>Taking the survey is voluntary. Please read the consent and privacy information on the survey
+       itself to learn how your answers will be used and protected before you submit.</p>
+    <p>If you are having symptoms now, get medical care first. See
+       <a href="{{ url_for('topic', slug='medical-care') }}">Medical Care</a>.</p>
+</section>
+{% endblock %}

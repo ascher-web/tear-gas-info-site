@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Beyond the Burning{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="wrap">
+            <a class="logo" href="{{ url_for('index') }}">Beyond the Burning</a>
+            <p class="tagline">The Human Health Effects of Tear Gas</p>
+            <nav>
+                <a href="{{ url_for('index') }}">Home</a>
+                {% for p in pages %}
+                <a href="{{ url_for('topic', slug=p.slug) }}">{{ p.nav }}</a>
+                {% endfor %}
+                <a href="{{ url_for('research') }}">Research Library</a>
+                <a href="{{ url_for('report') }}">Report Exposure</a>
+                <a class="nav-highlight" href="{{ url_for('minneapolis') }}">Minneapolis Survey</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="wrap">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <p><strong>Educational use only.</strong> This website does not give medical advice and does not
+            replace professional medical care. In an emergency, call 911. Poison Help Line: 1-800-222-1222.</p>
+            <p>Week 9 Checkpoint Project &middot; Built with Flask &middot;
+             <a href="{{ url_for('research') }}">Sources</a></p>
+        </div>
+    </footer>
+</body>
+</html>

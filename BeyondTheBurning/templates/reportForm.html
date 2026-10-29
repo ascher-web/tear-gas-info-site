@@ -1,0 +1,86 @@
+<!-- page that contains the input form -->
+{% extends "base.html" %}
+
+{% block title %}Report Exposure — Beyond the Burning{% endblock %}
+
+{% block content %}
+<section class="page-head">
+    <p class="eyebrow">Exposure Report</p>
+    <h1>Report Your Exposure</h1>
+    <p class="lead">Log what happened and what symptoms you had. You'll get a summary with links to the
+       research that matches your symptoms.</p>
+</section>
+
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+
+<form method="POST" class="card">
+    <!-- text input -->
+    <div>
+        <label for="name">Name *:</label>
+        <input type="text" id="name" name="name" value="{{ form.get('name', '') }}" required>
+    </div>
+
+    <!-- email input -->
+    <div>
+        <label for="email">Email *:</label>
+        <input type="email" id="email" name="email" value="{{ form.get('email', '') }}" required>
+    </div>
+
+    <!-- dropdown (select) -->
+    <div>
+        <label for="location">Where were you? *:</label>
+        <select id="location" name="location" required>
+            <option value="">Choose a location</option>
+            {% for loc in locations %}
+            <option value="{{ loc }}" {% if form.get('location') == loc %}selected{% endif %}>{{ loc }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <label for="agent">Exposed to *:</label>
+        <select id="agent" name="agent" required>
+            <option value="">Choose one</option>
+            {% for a in agents %}
+            <option value="{{ a }}" {% if form.get('agent') == a %}selected{% endif %}>{{ a }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- number input with min/max -->
+    <div>
+        <label for="days">Days exposed (1-30) *:</label>
+        <input type="number" id="days" name="days" min="1" max="30" value="{{ form.get('days', '') }}" required>
+    </div>
+
+    <!-- group of checkboxes that share one name; Flask reads them with request.form.getlist -->
+    <fieldset>
+        <legend>Symptoms you had (check all that apply):</legend>
+        {% set chosen = form.getlist('symptoms') if form.getlist else [] %}
+        {% for key, text in symptom_choices.items() %}
+        <div class="check">
+            <input type="checkbox" id="sym-{{ key }}" name="symptoms" value="{{ key }}" {% if key in chosen %}checked{% endif %}>
+            <label for="sym-{{ key }}">{{ text }}</label>
+        </div>
+        {% endfor %}
+    </fieldset>
+
+    <!-- multi-line textarea -->
+    <div>
+        <label for="details">Anything else?:</label>
+        <textarea id="details" name="details" rows="4">{{ form.get('details', '') }}</textarea>
+    </div>
+
+    <!-- single checkbox -->
+    <div>
+        <label for="medical_care">Did you get medical care?</label>
+        <input type="checkbox" id="medical_care" name="medical_care" value="yes" {% if form.get('medical_care') == 'yes' %}checked{% endif %}>
+    </div>
+
+    <button type="submit">Submit Report</button>
+    <p class="small">This class project does not save your report after the app restarts. To take part in
+       actual research, use the <a href="{{ url_for('minneapolis') }}">Minneapolis survey</a>.</p>
+</form>
+{% endblock %}

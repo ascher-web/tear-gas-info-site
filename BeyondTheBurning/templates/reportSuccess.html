@@ -1,0 +1,75 @@
+<!-- page that displays results once you've successfully entered them -->
+{% extends "base.html" %}
+
+{% block title %}Report Received — Beyond the Burning{% endblock %}
+
+{% block content %}
+<h1 class="success">Report Submitted Successfully!</h1>
+
+<div class="card">
+    <h2>Your Report:</h2>
+    <p><strong>Name:</strong> {{ name }}</p>
+    <p><strong>Email:</strong> {{ email }}</p>
+    <p><strong>Location:</strong> {{ location }}</p>
+    <p><strong>Exposed to:</strong> {{ agent }}</p>
+    <p><strong>Days exposed:</strong> {{ days }}</p>
+    <p><strong>Symptoms:</strong></p>
+    {% if symptoms %}
+    <ul>
+        {% for s in symptoms %}<li>{{ s }}</li>{% endfor %}
+    </ul>
+    {% else %}
+    <p>None reported</p>
+    {% endif %}
+    <p><strong>Other details:</strong> {{ details if details else "Not provided" }}</p>
+    <p><strong>Got medical care:</strong> {{ "Yes" if medical_care else "No" }}</p>
+</div>
+
+<div class="card">
+    <h2>What the research says about your report</h2>
+
+    {% if 'breathing' in symptom_keys %}
+    <p><strong>Breathing symptoms:</strong> coughing, wheezing, and shortness of breath are well-documented
+       effects. If they are severe or haven't gone away, see a doctor.
+       <a href="{{ url_for('topic', slug='respiratory') }}">Read more on Respiratory Health</a>.</p>
+    {% endif %}
+
+    {% if 'eyes' in symptom_keys or 'skin' in symptom_keys %}
+    <p><strong>Eye or skin symptoms:</strong> the CDC recommends rinsing eyes with plain water for 10 to 15
+       minutes and washing skin with soap and water.
+       <a href="{{ url_for('topic', slug='medical-care') }}">See Medical Care</a>.</p>
+    {% endif %}
+
+    {% if 'menstrual' in symptom_keys %}
+    <p><strong>Menstrual changes:</strong> two studies found many exposed people reported menstrual changes.
+       <a href="{{ url_for('topic', slug='reproductive') }}">Read more on Reproductive Health</a>.</p>
+    {% endif %}
+
+    {% if 'anxiety' in symptom_keys %}
+    <p><strong>Stress or anxiety:</strong> in the 2021 Portland study, 72.4% of respondents reported
+       psychological health issues after exposure. Talking to a doctor or counselor can help.</p>
+    {% endif %}
+
+    {% if days >= 5 %}
+    <p><strong>Repeated exposure:</strong> studies found people exposed on 5 or more days reported more
+       health problems. <a href="{{ url_for('topic', slug='long-term') }}">Read about Long-Term Effects</a>.</p>
+    {% endif %}
+
+    {% if not symptom_keys and days < 5 %}
+    <p>Most people recover soon after leaving the area. If new symptoms show up, see
+       <a href="{{ url_for('topic', slug='medical-care') }}">Medical Care</a>.</p>
+    {% endif %}
+</div>
+
+{% if location == "Minneapolis, MN" %}
+<section class="survey-banner">
+    <h2>You were in Minneapolis</h2>
+    <p>If this happened between December 2025 and March 2026, please consider sharing your experience with
+       the community health survey.</p>
+    <a class="button button-warn" href="{{ url_for('minneapolis') }}">Learn about the survey</a>
+</section>
+{% endif %}
+
+<a href="{{ url_for('report') }}">Submit Another Report</a> |
+<a href="{{ url_for('index') }}">Home</a>
+{% endblock %}

@@ -1,0 +1,71 @@
+<!-- Page 1: Homepage -->
+{% extends "base.html" %}
+
+{% block title %}Beyond the Burning — The Human Health Effects of Tear Gas{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <p class="eyebrow">Page 1 &middot; Home</p>
+    <h1>When the smoke clears, what happens to the human body?</h1>
+    <p class="lead">Tear gas is known for burning eyes, coughing, and trouble breathing. But medical
+       research shows its effects can go further, including lung complications, eye and skin injuries,
+       and reported changes in reproductive health.</p>
+    <a class="button" href="{{ url_for('topic', slug='understanding') }}">Start learning</a>
+    <a class="button button-outline" href="{{ url_for('research') }}">See the research</a>
+</section>
+
+<!-- Minneapolis survey call-out, shown prominently on the homepage -->
+<section class="survey-banner">
+    <h2>Were you in Minneapolis between December 2025 and March 2026?</h2>
+    <p>If you were exposed to tear gas, pepper spray, or other less-lethal weapons during ICE or other
+       federal enforcement operations, or saw others get hurt, a community health survey is
+       documenting these experiences.</p>
+    <a class="button button-warn" href="{{ url_for('minneapolis') }}">Learn about the survey</a>
+</section>
+
+<section>
+    <h2>Why this matters</h2>
+    <p>Tear gas doesn't only reach the people it's aimed at. Once it's in the air, it can expose
+       bystanders, residents, workers, and people with existing health conditions. How badly someone
+       is affected depends on the chemical, how much there is, how long they're exposed, whether it's
+       indoors or outdoors, and their own health.</p>
+    <p>Many people recover soon after leaving the area. Heavier or repeated exposure, though, has been
+       linked to longer-lasting symptoms, and serious and permanent injuries have been documented. There
+       are still big unanswered questions about repeated exposure, pregnancy, fertility, and long-term
+       health.</p>
+</section>
+
+<section>
+    <h2>Explore the topics</h2>
+    <div class="grid">
+        {% for p in pages %}
+        <a class="topic-card" href="{{ url_for('topic', slug=p.slug) }}">
+            <span class="num">{{ p.number }}</span>
+            <h3>{{ p.title }}</h3>
+            <p>{{ p.subtitle }}</p>
+        </a>
+        {% endfor %}
+        <a class="topic-card" href="{{ url_for('research') }}">
+            <span class="num">8</span>
+            <h3>Research Library</h3>
+            <p>Every study we cite, with findings and limitations.</p>
+        </a>
+    </div>
+</section>
+
+<section class="card">
+    <h2>How to read the evidence</h2>
+    <p>Each section on this site is labeled so you know how strong the science is:</p>
+    <ul class="legend">
+        <li><span class="badge established">Established effect</span> Supported by consistent clinical evidence (like eye irritation and coughing).</li>
+        <li><span class="badge association">Observed association</span> Studies found a link, but it isn't proven to be the cause (like menstrual changes).</li>
+        <li><span class="badge unknown">Insufficient evidence</span> Not enough research to say (like effects on fertility or miscarriage).</li>
+    </ul>
+</section>
+
+<section class="card">
+    <h2>Share your experience</h2>
+    <p>Use our <a href="{{ url_for('report') }}">exposure report form</a> to log symptoms and get links to the
+       research that matches them. {{ report_count }} report{{ "" if report_count == 1 else "s" }} submitted so far this session.</p>
+</section>
+{% endblock %}

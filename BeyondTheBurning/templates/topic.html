@@ -1,0 +1,70 @@
+<!-- Pages 2-7: one template is reused for every topic page; the text comes from content.py -->
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} — Beyond the Burning{% endblock %}
+
+{% block content %}
+<section class="page-head">
+    <p class="eyebrow">Page {{ page.number }}</p>
+    <h1>{{ page.title }}</h1>
+    <p class="lead">{{ page.subtitle }}</p>
+</section>
+
+{% for section in page.sections %}
+<section class="card {% if section.callout %}callout{% endif %}">
+    <h2>{{ section.heading }}</h2>
+
+    {% if section.evidence %}
+    <span class="badge {{ section.evidence }}">{{ labels[section.evidence] }}</span>
+    {% endif %}
+
+    {% for para in section.paragraphs %}
+    <p>{{ para }}</p>
+    {% endfor %}
+
+    {% if section.bullets %}
+    <ul>
+        {% for item in section.bullets %}
+        <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% for para in section.after %}
+    <p>{{ para }}</p>
+    {% endfor %}
+
+    {% if section.sources %}
+    <p class="cite">Sources:
+        {% for sid in section.sources %}
+        <a href="{{ url_for('research') }}#{{ sid }}">{{ sources[sid].authors.split(',')[0] }} ({{ sources[sid].year }})</a>{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+    {% endif %}
+</section>
+{% endfor %}
+
+{% if page.page_sources %}
+<p class="cite">Primary source for this page:
+    {% for sid in page.page_sources %}
+    <a href="{{ sources[sid].url }}" target="_blank" rel="noopener">{{ sources[sid].title }}</a>
+    {% endfor %}
+</p>
+{% endif %}
+
+<!-- previous / next links between topic pages -->
+<nav class="pager">
+    {% set i = pages.index(page) %}
+    {% if i > 0 %}
+    <a href="{{ url_for('topic', slug=pages[i-1].slug) }}">&larr; {{ pages[i-1].nav }}</a>
+    {% else %}
+    <a href="{{ url_for('index') }}">&larr; Home</a>
+    {% endif %}
+
+    {% if i < pages|length - 1 %}
+    <a href="{{ url_for('topic', slug=pages[i+1].slug) }}">{{ pages[i+1].nav }} &rarr;</a>
+    {% else %}
+    <a href="{{ url_for('research') }}">Research Library &rarr;</a>
+    {% endif %}
+</nav>
+{% endblock %}
